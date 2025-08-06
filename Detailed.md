@@ -78,24 +78,21 @@ Create Datasets:
 -------------------------------------------------------
 
 Create Pipeline
-
-Activity 1: Lookup Activity (lookup_emr_config)
-			source: generic flat file, read load_config.csv
-Activity 2: ForEach sequential activity 
-			input to this activity is output of step 1- @activity('lookup_emr_config').output.value
-ForEach activity steps
-2.1 generate file address using config file:
-	location = bronze/@item().targetpath/@split(item().tablename,'.')[1]
-2.2 Check if file is already on location
-		true => 2.2.1 move file to archive folder.
-				archive folder location: table_name/archive/YYYY/mm/dd
-				@concat(item().targetpath,'/archive/',formatDateTime(utcNow(), 'yyyy'),'/',formatDateTime(utcNow(),'%M'),'/',formatDateTime(utcNow(),'%d'))
-		false=> move to next step
-2.3 Find if table is listed as Incremental or Full load
-	@equals(item().loadtype, 'Full') 
-	true => follow 2.3.1 - Full Load
-			in case of full load, create parquet file at bronze folder, and record pipeline jobrun info
-	false=> follow 2.3.2 - Incremental Load
-			in case of incremental load, find out watermark column and last run time, using this info extract data from table and create parquet file and record pipeline jobrun info
-
-
+Activity 1. Lookup Activity (lookup_emr_config)</BR>
+&nbsp; &nbsp; &nbsp; source: generic flat file, read load_config.csv</BR>
+Activity 2. ForEach sequential activity </BR>
+&nbsp; &nbsp; &nbsp; input to this activity is output of step 1- @activity('lookup_emr_config').output.value</BR>
+&nbsp; &nbsp; &nbsp; ForEach activity steps</BR>
+2.1 generate file address using config file:</BR>
+&nbsp; &nbsp; &nbsp; location = bronze/@item().targetpath/@split(item().tablename,'.')[1]</BR>
+2.2 Check if file is already on location</BR>
+&nbsp; &nbsp; &nbsp; true => 2.2.1 move file to archive folder.</BR>
+&nbsp; &nbsp; &nbsp; archive folder location: table_name/archive/YYYY/mm/dd</BR>
+&nbsp; &nbsp; &nbsp; @concat(item().targetpath,'/archive/',formatDateTime(utcNow(), 'yyyy'),'/',formatDateTime(utcNow(),'%M'),'/',formatDateTime(utcNow(),'%d'))</BR>
+&nbsp; &nbsp; &nbsp; false=> move to next step</BR>
+2.3 Find if table is listed as Incremental or Full load</BR>
+&nbsp; &nbsp; &nbsp; @equals(item().loadtype, 'Full') </BR>
+&nbsp; &nbsp; &nbsp; true => follow 2.3.1 - Full Load</BR>
+&nbsp; &nbsp; &nbsp; in case of full load, create parquet file at bronze folder, and record pipeline jobrun info</BR>
+&nbsp; &nbsp; &nbsp; false=> follow 2.3.2 - Incremental Load</BR>
+&nbsp; &nbsp; &nbsp; in case of incremental load, find out watermark column and last run time, using this info extract data from table and create parquet file and record pipeline jobrun info</BR>
