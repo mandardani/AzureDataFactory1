@@ -10,17 +10,17 @@ use bcp command to import csv files into both database tables.
 command used example:
 cmd /c 'bcp [dbo].[transactions] in "C:\<local-path>\transactions.csv" -S <server> -d <database> -U h <user> -P <password> -c -t,'
 
-use key vault to store database password
------------------------------------------------------------
+**use key vault to store database password
+**
 metadata driven ADF:
 create load_config.csv file to store which database tables to be imported.
 file will store server, database,table, is_active, load type - full/ incremental, watermark column, target folder
------------------------------------------------------------ 
+**
 Create Azure Storage Account - Hierarchical Namespace is enabled.
 ADLS Gen2 - Containers 
 			config - stores configuration file content list of tables to be imported 
 			bronze - imported tables will be stored as parquet files
------------------------------------------------------------
+
 Define table to record ADF jobrun log (load_logs):
 
 Create Azure Databricks account - this will be used further for processing data in Medallion Architecture
@@ -39,8 +39,8 @@ unity Catalog - create credentials - access connector id (use created above)
 			  - create external location (abfss://config@storageAccount.dfs.core.windows.net)
 			    use credential created above, grant permission all
 
-all data recorded in load_logs will be stored in config folder
--------------------------------------------------------------
+**all data recorded in load_logs will be stored in config folder
+**-------------------------------------------------------------
 
 Create Data Factory: Launch Azure Data Factory Studio
 
@@ -96,3 +96,4 @@ Activity 2. ForEach sequential activity </BR>
 &nbsp; &nbsp; &nbsp; in case of full load, create parquet file at bronze folder, and record pipeline jobrun info</BR>
 &nbsp; &nbsp; &nbsp; false=> follow 2.3.2 - Incremental Load</BR>
 &nbsp; &nbsp; &nbsp; in case of incremental load, find out watermark column and last run time, using this info extract data from table and create parquet file and record pipeline jobrun info</BR>
+
