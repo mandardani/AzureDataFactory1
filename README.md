@@ -9,12 +9,6 @@ This repository contains a scalable, secure, and modular data ingestion framewor
 - **Source Systems**:  
   - Two Azure SQL Databases: `Hospital1` and `Hospital10`  
   - Each contains 5 tables: `Providers`, `Department`, `Patients`, `Encounters`, `Transactions`
-<a href="hospital1">
-  <img src="image/hosp1.hospital1.gif" image" width="250">
-</a>
-<a href="hospital10">
-  <img src="image/hosp1.hospital10.gif" image" width="250">
-</a>
 
 - **connect both tables using vscode **
   - use bcp command to import csv files into both database tables.
